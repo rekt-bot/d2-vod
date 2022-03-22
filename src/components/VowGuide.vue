@@ -457,10 +457,15 @@ li {
   display: flex;
   justify-content: space-evenly;
   margin: 2rem 0;
+  flex-wrap: wrap;
 }
 
 .vow-extra.toggles {
   margin-bottom: 2rem;
+}
+
+.toggles button {
+  margin-bottom: 0.5rem;
 }
 
 .theme--light.v-item--active {
