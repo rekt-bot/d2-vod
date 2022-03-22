@@ -15,16 +15,16 @@
               <v-card>
                 <v-card-text>
                   <v-row>
-                  <v-form v-model="formValues" class="form-container container">
+                  <v-form class="form-container container">
                     <v-row align="center">
                       <v-checkbox 
                         color="green"
-                        v-model="guardian1.new"
+                        v-model="guardians[0].new"
                         name="guardian1_new"
                       />
                       <v-text-field 
                       name="guardian1" 
-                      v-model="guardian1.name" 
+                      v-model="guardians[0].name" 
                       placeholder="Guardian 1"
                       clearable
                       />
@@ -32,12 +32,12 @@
                     <v-row>
                       <v-checkbox
                         color="green"
-                        v-model="guardian2.new"
+                        v-model="guardians[1].new"
                         name="guardian2_new"
                       />
                       <v-text-field 
                       name="guardian2" 
-                      v-model="guardian2.name" 
+                      v-model="guardians[1].name" 
                       placeholder="Guardian 2"
                       clearable
                       />
@@ -46,12 +46,12 @@
                     <v-row>
                       <v-checkbox
                         color="green"
-                        v-model="guardian3.new"
+                        v-model="guardians[2].new"
                         name="guardian3_new"
                       />
                       <v-text-field 
                       name="guardian3"
-                      v-model="guardian3.name" 
+                      v-model="guardians[2].name" 
                       placeholder="Guardian 3" 
                       clearable
                       />
@@ -59,12 +59,12 @@
                     <v-row>
                       <v-checkbox
                         color="green"
-                        v-model="guardian4.new"
+                        v-model="guardians[3].new"
                         name="guardian4_new"
                       />
                       <v-text-field 
                       name="guardian4" 
-                      v-model="guardian4.name" 
+                      v-model="guardians[3].name" 
                       placeholder="Guardian 4"
                       clearable
                       />
@@ -72,12 +72,12 @@
                     <v-row>
                       <v-checkbox
                         color="green"
-                        v-model="guardian5.new"
+                        v-model="guardians[4].new"
                         name="guardian5_new"
                       />
                       <v-text-field 
                       name="guardian5" 
-                      v-model="guardian5.name" 
+                      v-model="guardians[4].name" 
                       placeholder="Guardian 5"
                       clearable
                       />
@@ -85,17 +85,22 @@
                     <v-row>
                       <v-checkbox 
                         color="green"
-                        v-model="guardian6.new"
+                        v-model="guardians[5].new"
                         name="guardian6_new"
                       />
                       <v-text-field 
                       name="guardian6"
-                      v-model="guardian6.name" 
+                      v-model="guardians[5].name" 
                       placeholder="Guardian 6" 
                       clearable
                       />
                     </v-row>
                   </v-form>
+                  <v-btn
+                      elevation="2"
+                      class="randomize-fireteam"
+                      @click="randomizeFireteam"
+                    >Randomize Fireteam</v-btn>
                   </v-row>
                 </v-card-text>
               </v-card>
@@ -115,7 +120,6 @@
                 >
                   <template>
                     <v-tabs
-                      v-model="tab"
                       align-with-title
                     >
                       <v-tabs-slider color="red"></v-tabs-slider>
@@ -136,20 +140,20 @@
                   <v-card-text>
                     <h2>Team Dark</h2>
                     <ul>
-                      <li><strong :style="guardian1.new ? 'color: red;' : ''">Defender</strong>: {{ guardian1.name }}</li>
-                      <li><strong :style="guardian2.new ? 'color: red;' : ''">Runner</strong>: {{ guardian2.name }}</li>
+                      <li><strong :style="guardians[0].new ? 'color: green;' : ''">Defender</strong>: {{ guardians[0].name }}</li>
+                      <li><strong :style="guardians[1].new ? 'color: green;' : ''">Runner</strong>: {{ guardians[1].name }}</li>
                     </ul>
 
                     <h2>Team Mid</h2>
                     <ul>
-                      <li><strong :style="guardian3.new ? 'color: red;' : ''">Defender</strong>: {{ guardian3.name }}</li>
-                      <li><strong :style="guardian4.new ? 'color: red;' : ''">Runner</strong>: {{ guardian4.name }}</li>
+                      <li><strong :style="guardians[2].new ? 'color: green;' : ''">Defender</strong>: {{ guardians[2].name }}</li>
+                      <li><strong :style="guardians[3].new ? 'color: green;' : ''">Runner</strong>: {{ guardians[3].name }}</li>
                     </ul>
 
                     <h2>Team Light</h2>
                     <ul>
-                      <li><strong :style="guardian5.new ? 'color: red;' : ''">Defender</strong>: {{ guardian5.name }}</li>
-                      <li><strong :style="guardian6.new ? 'color: red;' : ''">Runner</strong>: {{ guardian6.name }}</li>
+                      <li><strong :style="guardians[4].new ? 'color: green;' : ''">Defender</strong>: {{ guardians[4].name }}</li>
+                      <li><strong :style="guardians[5].new ? 'color: green;' : ''">Runner</strong>: {{ guardians[5].name }}</li>
                     </ul>
                     <v-btn
                       elevation="2"
@@ -168,20 +172,20 @@
                   <v-card-text>
                     <h2>Totem Team</h2>
                     <ul>
-                      <li><strong :style="guardian1.new ? 'color: red;' : ''">First</strong>: {{ guardian1.name }}</li>
-                      <li><strong :style="guardian2.new ? 'color: red;' : ''">Second</strong>: {{ guardian2.name }}</li>
+                      <li><strong :style="guardians[0].new ? 'color: green;' : ''">First</strong>: {{ guardians[0].name }}</li>
+                      <li><strong :style="guardians[1].new ? 'color: green;' : ''">Second</strong>: {{ guardians[1].name }}</li>
                     </ul>
 
                     <h2>Add Clear</h2>
                     <ul>
-                      <li :style="guardian3.new ? 'color: red;' : ''">{{ guardian3.name }}</li>
-                      <li :style="guardian4.new ? 'color: red;' : ''">{{ guardian4.name }}</li>
+                      <li :style="guardians[2].new ? 'color: green;' : ''">{{ guardians[2].name }}</li>
+                      <li :style="guardians[3].new ? 'color: green;' : ''">{{ guardians[3].name }}</li>
                     </ul>
 
                     <h2>Stunners</h2>
                     <ul>
-                      <li :style="guardian5.new ? 'color: red;' : ''">{{ guardian5.name }}</li>
-                      <li :style="guardian6.new ? 'color: red;' : ''">{{ guardian6.name }}</li>
+                      <li :style="guardians[4].new ? 'color: green;' : ''">{{ guardians[4].name }}</li>
+                      <li :style="guardians[5].new ? 'color: green;' : ''">{{ guardians[5].name }}</li>
                     </ul>
                   </v-card-text>
                 </v-card>
@@ -191,27 +195,27 @@
                   <v-card-text>
                     <h2>Room 1</h2>
                     <ul>
-                      <li><strong :style="guardian1.new ? 'color: red;' : ''">Shard</strong>: {{ guardian1.name }}</li>
+                      <li><strong :style="guardians[0].new ? 'color: green;' : ''">Shard</strong>: {{ guardians[0].name }}</li>
                     </ul>
 
                     <h2>Room 2</h2>
                     <ul>
-                      <li><strong :style="guardian2.new ? 'color: red;' : ''">Shard</strong>: {{ guardian2.name }}</li>
-                      <li><strong :style="guardian3.new ? 'color: red;' : ''">Relic</strong>: {{ guardian3.name }}</li>
+                      <li><strong :style="guardians[1].new ? 'color: green;' : ''">Shard</strong>: {{ guardians[1].name }}</li>
+                      <li><strong :style="guardians[2].new ? 'color: green;' : ''">Relic</strong>: {{ guardians[2].name }}</li>
                     </ul>
 
                     <h2>Room 3</h2>
                     <ul>
-                      <li><strong :style="guardian4.new ? 'color: red;' : ''">Shard</strong>: {{ guardian4.name }}</li>
-                      <li><strong :style="guardian5.new ? 'color: red;' : ''">Relic</strong>: {{ guardian5.name }}</li>
-                      <li><strong :style="guardian6.new ? 'color: red;' : ''">Blight</strong>: {{ guardian6.name }}</li>
+                      <li><strong :style="guardians[3].new ? 'color: green;' : ''">Shard</strong>: {{ guardians[3].name }}</li>
+                      <li><strong :style="guardians[4].new ? 'color: green;' : ''">Relic</strong>: {{ guardians[4].name }}</li>
+                      <li><strong :style="guardians[5].new ? 'color: green;' : ''">Blight</strong>: {{ guardians[5].name }}</li>
                     </ul>
                       
                     <h2>Room 4</h2>
                     <ul>
-                      <li><strong :style="guardian2.new ? 'color: red;' : ''">Shard</strong>: {{ guardian2.name }}</li>
-                      <li><strong :style="guardian3.new ? 'color: red;' : ''">Relic</strong>: {{ guardian3.name }}</li>
-                      <li><strong :style="guardian1.new ? 'color: red;' : ''">Blight</strong>: {{ guardian1.name }}</li>
+                      <li><strong :style="guardians[1].new ? 'color: green;' : ''">Shard</strong>: {{ guardians[1].name }}</li>
+                      <li><strong :style="guardians[2].new ? 'color: green;' : ''">Relic</strong>: {{ guardians[2].name }}</li>
+                      <li><strong :style="guardians[0].new ? 'color: green;' : ''">Blight</strong>: {{ guardians[0].name }}</li>
                     </ul>
                     <v-btn
                       elevation="2"
@@ -230,20 +234,20 @@
                   <v-card-text>
                     <h2>Dunkers</h2>
                     <ul>
-                      <li><strong :style="guardian1.new ? 'color: red;' : ''">First</strong>: {{ guardian1.name }}</li>
-                      <li><strong :style="guardian2.new ? 'color: red;' : ''">Second</strong>: {{ guardian2.name }}</li>
+                      <li><strong :style="guardians[0].new ? 'color: green;' : ''">First</strong>: {{ guardians[0].name }}</li>
+                      <li><strong :style="guardians[1].new ? 'color: green;' : ''">Second</strong>: {{ guardians[1].name }}</li>
                     </ul>
 
                     <h2>Passers</h2>
                     <ul>
-                      <li><strong :style="guardian3.new ? 'color: red;' : ''">First</strong>: {{ guardian3.name }}</li>
-                      <li><strong :style="guardian4.new ? 'color: red;' : ''">Second</strong>: {{ guardian4.name }}</li>
+                      <li><strong :style="guardians[2].new ? 'color: green;' : ''">First</strong>: {{ guardians[2].name }}</li>
+                      <li><strong :style="guardians[3].new ? 'color: green;' : ''">Second</strong>: {{ guardians[3].name }}</li>
                     </ul>
 
                     <h2>Adds / Callouts</h2>
                     <ul>
-                      <li><strong :style="guardian5.new ? 'color: red;' : ''">Left</strong>: {{ guardian5.name }}</li>
-                      <li><strong :style="guardian6.new ? 'color: red;' : ''">Right</strong>: {{ guardian6.name }}</li>
+                      <li><strong :style="guardians[4].new ? 'color: green;' : ''">Left</strong>: {{ guardians[4].name }}</li>
+                      <li><strong :style="guardians[5].new ? 'color: green;' : ''">Right</strong>: {{ guardians[5].name }}</li>
                     </ul>
                     <v-btn
                       elevation="2"
@@ -287,31 +291,52 @@
       showAcquisitionMap: false,
       showExhibitionMap: false,
       showDominionMap: false,
-      guardian1: {
-        name: '',
-        new: false
-      },
-      guardian2: {
-        name: '',
-        new: false
-      },
-      guardian3: {
-        name: '',
-        new: false
-      },
-      guardian4: {
-        name: '',
-        new: false
-      },
-      guardian5: {
-        name: '',
-        new: false
-      },
-      guardian6: {
-        name: '',
-        new: false
-      },
+      guardians: [
+        {
+          name: '',
+          new: false
+        },
+        {
+          name: '',
+          new: false
+        },
+        {
+          name: '',
+          new: false
+        },
+        {
+          name: '',
+          new: false
+        },
+        {
+          name: '',
+          new: false
+        },
+        {
+          name: '',
+          new: false
+        },
+      ],
     }),
+    methods: {
+      randomizeFireteam: function() {
+        let currentFireteam = this.guardians;
+        let m = 0;
+
+        for (let i = currentFireteam.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [currentFireteam[i], currentFireteam[j]] = [currentFireteam[j], currentFireteam[i]];
+        }
+        
+        currentFireteam.forEach(member => {
+          this.guardians[m].name = member.name;
+          this.guardians[m].new = member.new;
+          m++;
+        })
+
+        this.$forceUpdate();
+      },
+    }
   }
 </script>
 
@@ -331,7 +356,7 @@ li {
 }
 
 .sherpa {
-  color: red;
+  color: green;
 }
 
 .encounter-map {
@@ -340,5 +365,9 @@ li {
 
 .encounter-map + .v-image {
   margin-top: 2rem;
+}
+
+.randomize-fireteam {
+  margin: 1rem;
 }
 </style>
