@@ -195,27 +195,27 @@
                   <v-card-text>
                     <h2>Room 1</h2>
                     <ul>
-                      <li><strong :style="guardians[0].new ? 'color: green;' : ''">Shard</strong>: {{ guardians[0].name }}</li>
+                      <li><strong :style="guardians[0].new ? 'color: green;' : ''"><v-icon color="#35c2f7">mdi-star</v-icon>Shard</strong>: {{ guardians[0].name }}</li>
                     </ul>
 
                     <h2>Room 2</h2>
                     <ul>
-                      <li><strong :style="guardians[1].new ? 'color: green;' : ''">Shard</strong>: {{ guardians[1].name }}</li>
-                      <li><strong :style="guardians[2].new ? 'color: green;' : ''">Relic</strong>: {{ guardians[2].name }}</li>
+                      <li><strong :style="guardians[1].new ? 'color: green;' : ''"><v-icon color="#35c2f7">mdi-star</v-icon>Shard</strong>: {{ guardians[1].name }}</li>
+                      <li><strong :style="guardians[2].new ? 'color: green;' : ''"><v-icon>mdi-baseball-diamond</v-icon>Relic</strong>: {{ guardians[2].name }}</li>
                     </ul>
 
                     <h2>Room 3</h2>
                     <ul>
-                      <li><strong :style="guardians[3].new ? 'color: green;' : ''">Shard</strong>: {{ guardians[3].name }}</li>
-                      <li><strong :style="guardians[4].new ? 'color: green;' : ''">Relic</strong>: {{ guardians[4].name }}</li>
-                      <li><strong :style="guardians[5].new ? 'color: green;' : ''">Blight</strong>: {{ guardians[5].name }}</li>
+                      <li><strong :style="guardians[3].new ? 'color: green;' : ''"><v-icon color="#35c2f7">mdi-star</v-icon>Shard</strong>: {{ guardians[3].name }}</li>
+                      <li><strong :style="guardians[4].new ? 'color: green;' : ''"><v-icon>mdi-baseball-diamond</v-icon>Relic</strong>: {{ guardians[4].name }}</li>
+                      <li><strong :style="guardians[5].new ? 'color: green;' : ''"><v-icon color="#205300">mdi-biohazard</v-icon>Blight</strong>: {{ guardians[5].name }}</li>
                     </ul>
                       
                     <h2>Room 4</h2>
                     <ul>
-                      <li><strong :style="guardians[1].new ? 'color: green;' : ''">Shard</strong>: {{ guardians[1].name }}</li>
-                      <li><strong :style="guardians[2].new ? 'color: green;' : ''">Relic</strong>: {{ guardians[2].name }}</li>
-                      <li><strong :style="guardians[0].new ? 'color: green;' : ''">Blight</strong>: {{ guardians[0].name }}</li>
+                      <li><strong :style="guardians[1].new ? 'color: green;' : ''"><v-icon color="#35c2f7">mdi-star</v-icon>Shard</strong>: {{ guardians[1].name }}</li>
+                      <li><strong :style="guardians[2].new ? 'color: green;' : ''"><v-icon>mdi-baseball-diamond</v-icon>Relic</strong>: {{ guardians[2].name }}</li>
+                      <li><strong :style="guardians[0].new ? 'color: green;' : ''"><v-icon color="#205300">mdi-biohazard</v-icon>Blight</strong>: {{ guardians[0].name }}</li>
                     </ul>
                     <v-btn
                       elevation="2"
@@ -232,7 +232,7 @@
               <v-sheet v-show="current === 'Dominion'">
                 <v-card>
                   <v-card-text>
-                    <h2>Dunkers</h2>
+                    <h2>Dunkers (Both Phases)</h2>
                     <ul>
                       <li><strong :style="guardians[0].new ? 'color: green;' : ''">First</strong>: {{ guardians[0].name }}</li>
                       <li><strong :style="guardians[1].new ? 'color: green;' : ''">Second</strong>: {{ guardians[1].name }}</li>
@@ -261,11 +261,75 @@
                   </v-card-text>
                 </v-card>
               </v-sheet>
-              <v-sheet v-show="current === 'Extras'">
+              <v-sheet v-show="current === 'Extra'">
                 <v-card>
                   <v-card-text>
                     <h2>Extra Loot Chest</h2>
+                    <v-sheet class="vow-extra toggles">
+                      <v-btn outlined @click="extraToggle">Pyramid</v-btn>
+                      <v-btn outlined @click="extraToggle">Hands</v-btn>
+                      <v-btn outlined @click="extraToggle">Darkness</v-btn>
+                      <v-btn outlined @click="extraToggle">Traveller</v-btn>
+                      <v-btn outlined @click="extraToggle">Praise</v-btn>
+                      <v-btn outlined @click="extraToggle">Light</v-btn>
+                      <v-btn outlined @click="extraToggle">Square</v-btn>
+                      <v-btn outlined @click="extraToggle">T-Pose</v-btn>
+                      <v-btn outlined @click="extraToggle">Kill</v-btn>
+                    </v-sheet>
+                    
+                    <v-sheet class="location pyramid" v-if="this.extraSymbols.pyramid">
+                      <h2>Pyramid Symbol Location</h2>
+                      <p>Just after starting symbol drop-down</p>
+                      <v-img src="https://i.imgur.com/UEWgMZJ.jpeg" />
+                    </v-sheet>
 
+                    <v-sheet class="location hands" v-if="this.extraSymbols.hands">
+                      <h2>Hands Symbol Location</h2>
+                      <p>Just before first encounter</p>
+                      <v-img src="https://i.imgur.com/d8frflt.jpeg" />
+                    </v-sheet>
+
+                    <v-sheet class="location darkness" v-if="this.extraSymbols.darkness">
+                      <h2>Darkness Symbol Location</h2>
+                      <p>Left side of Totem encounter room</p>
+                      <v-img src="https://i.imgur.com/JezBnpZ.jpeg" />
+                    </v-sheet>
+
+                    <v-sheet class="location traveller" v-if="this.extraSymbols.traveller">
+                      <h2>Traveller Symbol Location</h2>
+                      <p>A couple of rooms after the many-assed horse</p>
+                      <v-img src="https://i.imgur.com/avPwxY2.jpeg" />
+                    </v-sheet>
+                    
+                    <v-sheet class="location praise" v-if="this.extraSymbols.praise">
+                      <h2>Praise Symbol Location</h2>
+                      <p>After the Gatekeeper encounter</p>
+                      <v-img src="https://i.imgur.com/xzpEw1b.jpeg" />
+                    </v-sheet>
+                    
+                    <v-sheet class="location light" v-if="this.extraSymbols.light">
+                      <h2>Light Symbol Location</h2>
+                      <p>During the jumping puzzle section</p>
+                      <v-img src="https://i.imgur.com/3NkI1am.jpeg" />
+                    </v-sheet>
+                    
+                    <v-sheet class="location square" v-if="this.extraSymbols.square">
+                      <h2>Square Symbol Location</h2>
+                      <p>Further along same jumping puzzle</p>
+                      <v-img src="https://i.imgur.com/KGXEoEp.jpeg" />
+                    </v-sheet>
+                    
+                    <v-sheet class="location tpose" v-if="this.extraSymbols.tpose">
+                      <h2>T-Pose Symbol Location</h2>
+                      <p>After relic encounter, up left stairs</p>
+                      <v-img src="https://i.imgur.com/qyFKq9h.jpeg" />
+                    </v-sheet>
+                    
+                    <v-sheet class="location kill" v-if="this.extraSymbols.kill">
+                      <h2>Kill Symbol Location</h2>
+                      <p>Final platforming area before boss arena</p>
+                      <v-img src="https://i.imgur.com/ooI98WP.jpeg" />
+                    </v-sheet>
                   </v-card-text>
                 </v-card>
               </v-sheet>
@@ -317,6 +381,18 @@
           new: false
         },
       ],
+      extraSymbols: {
+        active: 0,
+        pyramid: false,
+        hands: false,
+        darkness: false,
+        traveller: false,
+        praise: false,
+        light: false,
+        square: false,
+        tpose: false,
+        kill: false
+      },
     }),
     methods: {
       randomizeFireteam: function() {
@@ -336,11 +412,17 @@
 
         this.$forceUpdate();
       },
+
+      extraToggle: function(e) {
+        e.currentTarget.classList.toggle('v-item--active');
+        let secretSymbol = e.target.innerHTML.toLowerCase().replaceAll(/-| /g,'');
+        this.extraSymbols[secretSymbol] = !this.extraSymbols[secretSymbol];
+      },
     }
   }
 </script>
 
-<style scoped>
+<style>
 
 ul {
   padding-left: 0;
@@ -369,5 +451,27 @@ li {
 
 .randomize-fireteam {
   margin: 1rem;
+}
+
+.vow-extra {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 2rem 0;
+}
+
+.vow-extra.toggles {
+  margin-bottom: 2rem;
+}
+
+.theme--light.v-item--active {
+  background: #333;
+}
+
+.theme--light.v-item--active .v-btn__content {
+  color: white;
+}
+
+.location + .location {
+  margin-top: 2rem;
 }
 </style>
