@@ -125,17 +125,17 @@
                       <v-tabs-slider color="red"></v-tabs-slider>
 
                       <v-tab
-                        v-for="link in links"
-                        :key="link"
-                        @click="current = link"
+                        v-for="encounter in encounters"
+                        :key="encounter.name"
+                        @click="current.name = encounter.name"
                       >
-                        {{ link }}
+                        {{ encounter.name }}
                       </v-tab>
                     </v-tabs>
                   </template>
                 </v-toolbar>
               </v-card>
-              <v-sheet v-show="current === 'Acquisition'">
+              <v-sheet v-show="current.name === 'Acquisition'">
                 <v-card>
                   <v-card-text>
                     <h2>Team Dark</h2>
@@ -155,19 +155,42 @@
                       <li><strong :style="guardians[4].new ? 'color: green;' : ''">Defender</strong>: {{ guardians[4].name }}</li>
                       <li><strong :style="guardians[5].new ? 'color: green;' : ''">Runner</strong>: {{ guardians[5].name }}</li>
                     </ul>
-                    <v-btn
-                      elevation="2"
-                      class="encounter-map"
-                      @click="showAcquisitionMap = !showAcquisitionMap"
-                    >Show Graphic</v-btn>
-                    <v-img
-                      v-if="showAcquisitionMap"
-                      max-width="100%"
-                      src="https://i.imgur.com/JlCqk9e.png" />
+                    <div class="encounter-extras">
+                      <v-btn
+                        elevation="2"
+                        class="encounter-challenge"
+                        @click="encounters[0].challenge = !encounters[0].challenge"
+                      >Loot Challenge</v-btn>
+                      <v-btn
+                        elevation="2"
+                        class="encounter-triumph"
+                        @click="encounters[0].triumph = !encounters[0].triumph"
+                      >Title Triumph</v-btn>
+                      <v-btn
+                        elevation="2"
+                        class="encounter-map"
+                        @click="encounters[0].graphic = !encounters[0].graphic"
+                      >Graphic</v-btn>
+                      <v-card-text v-if="encounters[0].challenge">
+                        <h3>Extra Loot Challenge</h3>
+                        <p><strong>Swift Destruction</strong> - All three Unstoppable Ogres must be killed at the same time, each round. Killing a Glyph Keeper spawns an ogre.</p>
+                      </v-card-text>
+                      <v-card-text v-if="encounters[0].triumph">
+                        <h3>Title Triumph</h3>
+                        <p><strong>On My Go</strong> - Cannot kill Abated Adherent enemies until they attack your obelisk.</p>
+                      </v-card-text>
+                      <v-card-text
+                          v-if="encounters[0].graphic"
+                        >
+                        <v-img
+                          max-width="100%"
+                          src="https://i.imgur.com/JlCqk9e.png" />
+                      </v-card-text>
+                    </div>
                   </v-card-text>
                 </v-card>
               </v-sheet>
-              <v-sheet v-show="current === 'Collection'">
+              <v-sheet v-show="current.name === 'Collection'">
                 <v-card>
                   <v-card-text>
                     <h2>Totem Team</h2>
@@ -187,10 +210,21 @@
                       <li :style="guardians[4].new ? 'color: green;' : ''">{{ guardians[4].name }}</li>
                       <li :style="guardians[5].new ? 'color: green;' : ''">{{ guardians[5].name }}</li>
                     </ul>
+                    <div class="encounter-extras">
+                      <v-btn
+                        elevation="2"
+                        class="encounter-triumph"
+                        @click="encounters[1].triumph = !encounters[1].triumph"
+                      >Title Triumph</v-btn>
+                      <v-card-text v-if="encounters[1].triumph">
+                        <h3>Title Triumph</h3>
+                        <p><strong>Handle With Care</strong> - Defeat The Caretaker while having every member of your fireteam stun at least once per floor.</p>
+                      </v-card-text>
+                    </div>
                   </v-card-text>
                 </v-card>
               </v-sheet>
-              <v-sheet v-show="current === 'Exhibition'">
+              <v-sheet v-show="current.name === 'Exhibition'">
                 <v-card>
                   <v-card-text>
                     <h2>Room 1</h2>
@@ -217,19 +251,33 @@
                       <li><strong :style="guardians[2].new ? 'color: green;' : ''"><v-icon>mdi-baseball-diamond</v-icon>Relic</strong>: {{ guardians[2].name }}</li>
                       <li><strong :style="guardians[0].new ? 'color: green;' : ''"><v-icon color="#205300">mdi-biohazard</v-icon>Blight</strong>: {{ guardians[0].name }}</li>
                     </ul>
-                    <v-btn
-                      elevation="2"
-                      class="encounter-map"
-                      @click="showExhibitionMap = !showExhibitionMap"
-                    >Show Graphic</v-btn>
-                    <v-img
-                      v-if="showExhibitionMap"
-                      max-width="100%"
-                      src="https://i.imgur.com/2mDtrov.png" />
+                    <div class="encounter-extras">
+                      <v-btn
+                        elevation="2"
+                        class="encounter-triumph"
+                        @click="encounters[2].triumph = !encounters[2].triumph"
+                      >Title Triumph</v-btn>
+                      <v-btn
+                        elevation="2"
+                        class="encounter-map"
+                        @click="encounters[2].graphic = !encounters[2].graphic"
+                      >Graphic</v-btn>
+                      <v-card-text v-if="encounters[2].triumph">
+                        <h3>Title Triumph</h3>
+                        <p><strong>Glyph to Glyph</strong> - Kill each set of Glyphkeepers in Exhibition within 5 seconds of each other.</p>
+                      </v-card-text>
+                      <v-card-text
+                          v-if="encounters[2].graphic"
+                        >
+                        <v-img
+                          max-width="100%"
+                          src="https://i.imgur.com/2mDtrov.png" />
+                      </v-card-text>
+                    </div>
                   </v-card-text>
                 </v-card>
               </v-sheet>
-              <v-sheet v-show="current === 'Dominion'">
+              <v-sheet v-show="current.name === 'Dominion'">
                 <v-card>
                   <v-card-text>
                     <h2>Dunkers (Both Phases)</h2>
@@ -249,19 +297,33 @@
                       <li><strong :style="guardians[4].new ? 'color: green;' : ''">Left</strong>: {{ guardians[4].name }}</li>
                       <li><strong :style="guardians[5].new ? 'color: green;' : ''">Right</strong>: {{ guardians[5].name }}</li>
                     </ul>
-                    <v-btn
-                      elevation="2"
-                      class="encounter-map"
-                      @click="showDominionMap = !showDominionMap"
-                    >Show Graphic</v-btn>
-                    <v-img
-                      v-if="showDominionMap"
-                      max-width="100%"
-                      src="https://i.imgur.com/XoJA8em.png" />
+                    <div class="encounter-extras">
+                      <v-btn
+                        elevation="2"
+                        class="encounter-triumph"
+                        @click="encounters[3].triumph = !encounters[3].triumph"
+                      >Title Triumph</v-btn>
+                      <v-btn
+                        elevation="3"
+                        class="encounter-map"
+                        @click="encounters[3].graphic = !encounters[3].graphic"
+                      >Graphic</v-btn>
+                      <v-card-text v-if="encounters[3].triumph">
+                        <h3>Title Triumph</h3>
+                        <p><strong>Symmetrical Energy</strong> - Any energy deposit in Dominion must be accompanied by another deposit within 5 seconds.</p>
+                      </v-card-text>
+                      <v-card-text
+                          v-if="encounters[3].graphic"
+                        >
+                        <v-img
+                          max-width="100%"
+                          src="https://i.imgur.com/XoJA8em.png" />
+                      </v-card-text>
+                    </div>
                   </v-card-text>
                 </v-card>
               </v-sheet>
-              <v-sheet v-show="current === 'Extra'">
+              <v-sheet v-show="current.name === 'Extra'">
                 <v-card>
                   <v-card-text>
                     <h2>Extra Loot Chest</h2>
@@ -344,17 +406,41 @@
   export default {
     name: 'VowGuide',
     data: () => ({
-      links: [
-        'Acquisition',
-        'Collection',
-        'Exhibition',
-        'Dominion',
-        'Extra',
+      encounters: [
+        {
+          name: 'Acquisition',
+          graphic: false,
+          challenge: false,
+          triumph: false,
+        },
+        {
+          name: 'Collection',
+          graphic: false,
+          challenge: false,
+          triumph: false,
+        },
+        {
+          name: 'Exhibition',
+          graphic: false,
+          challenge: false,
+          triumph: false,
+        },
+        {
+          name: 'Dominion',
+          graphic: false,
+          challenge: false,
+          triumph: false,
+        },
+        {
+          name: 'Extra',
+          graphic: false,
+          challenge: false,
+          triumph: false,
+        },
       ],
-      current: 'Acquisition',
-      showAcquisitionMap: false,
-      showExhibitionMap: false,
-      showDominionMap: false,
+      current: {
+        name: 'Acquisition',
+      },
       guardians: [
         {
           name: '',
@@ -441,10 +527,6 @@ li {
   color: green;
 }
 
-.encounter-map {
-  margin: 2rem 0 0;
-}
-
 .encounter-map + .v-image {
   margin-top: 2rem;
 }
@@ -478,5 +560,13 @@ li {
 
 .location + .location {
   margin-top: 2rem;
+}
+
+.encounter-extras {
+  margin-top: 2rem;
+}
+
+.encounter-extras button {
+  margin-right: 1rem;
 }
 </style>
