@@ -8,12 +8,10 @@
             sm="12"
             lg="4"
           >
-            <v-sheet
-              rounded="lg"
-              min-height="268"
-            >
-              <v-card>
-                <v-card-text>
+            <v-expansion-panels accordion>
+              <v-expansion-panel>
+                <v-expansion-panel-header>Fireteam</v-expansion-panel-header>
+                <v-expansion-panel-content>
                   <v-row>
                   <v-form class="form-container container">
                     <v-row align="center">
@@ -102,9 +100,9 @@
                       @click="randomizeFireteam"
                     >Randomize Fireteam</v-btn>
                   </v-row>
-                </v-card-text>
-              </v-card>
-            </v-sheet>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
           </v-col>
 
           <v-col
